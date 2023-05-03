@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="./array.js"></script>
+    </head>
+    <body>
+        
+    </body>
+    <script>
+        var s=(str1,str2)=>{
+            return str1+str2;
+        }
+        function adds(){
+            console.log(arguments);
+            var a ='';
+            for(var b in arguments){
+                a+=arguments[b];
+            }
+            console.log(a);
+            
+
+        }
+        adds('1a','2b')
+        var arr=['new array'];
+        var arrPush=(...arguments)=>{
+            // arguments=[arr,1,2] 
+            for(var a=1;a<arguments.length;a++){
+                arguments[0][arguments[0].length]=arguments[a];
+                
+            }
+            console.log(arr,typeof(arr))
+        }
+        arrPush(arr,1,2)
+
+
+4008207388
+    </script>
+</html>

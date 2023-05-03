@@ -1,17 +1,210 @@
-<!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta charset="UTF-8"/> />
+    <!-- <script src="https://unpkg.com/vue@3.2.13/dist/vue.global.js"></script> -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- import CSS -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/browse/element-plus@2.2.8/theme-chalk/index.css"> -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-plus@2.2.8/dist/index.full.js"></script>
+    <!-- <script src="https://unpkg.com/element-plus"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+
   </head>
   <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <div id="app" class="container">
+      <button @click="showWeather">展开/隐藏 24节气</button>
+      <button @click="showHolidays">展开/隐藏 节日</button>
+    <div class="row">
+      <!-- <div>
+        <el-row >
+        <el-col :span="10" class="" ><button @click="showWeather">展开/隐藏 24节气</button></el-col>
+        <el-col :span="10" class=""><button @click="showHolidays">展开/隐藏 节日</button> </el-col>
+         </el-row>
+    </div> -->
+
+    
+    <div v-show="isActiveW"   class="col-md">
+        <h3>24节气</h3>
+        <table class="table table-striped table-light table-hover  table-sm table-responsive-md" >
+         <caption tion>二十四节气</caption>
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" >节气名称</th>
+              <th scope="col" >日期</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr v-for="w in weather" :key="w.id"  class="row d-flex p-2 bd-highlight ">
+              <th  scope="row">{{w.id}}</th>
+              <td  class="p-3 mb-2 bg-info  text-white">{{w.name}}</td>
+              <td  class="table-info">{{w.date}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+   <div v-show="isActiveH"  class=" col-md"  >
+        <h3>传统节日</h3>
+        <table class="table table-striped table-light table-hover  table-sm table-responsive-md">
+          <caption tion>传统节日</caption>
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" >节日名称</th>
+              <th scope="col" >日期</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="h in holidays" :key="h.id"  class="row">
+              <th  scope="row">{{h.id}}</th>
+              <td   class="p-3 mb-2 bg-info  text-dark">{{h.name}}</td>
+              <td >{{h.date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+   </div>
+    <!-- <el-container class="layout-container-demo" style="height: 1500px">
+        <el-aside width="200px">
+            <el-scrollbar>
+                <el-menu :default-openeds="['1']">
+                <el-sub-menu index="1">
+                    <template #title>
+                    <el-icon><message /></el-icon>背诵
+                    </template>
+                    <el-menu-item-group>
+                    <template #title>2023 年 1 月</template>
+                    <el-menu-item @click="showWeather" index="1-1">24节气</el-menu-item>
+                    <el-menu-item @click="showHolidays" index="1-2">传统节日</el-menu-item>
+                    </el-menu-item-group>
+                
+                </el-sub-menu>
+                </el-menu>
+            </el-scrollbar>
+        </el-aside>
+
+        <el-container>
+            <el-header style="text-align: right; font-size: 12px">
+                <div class="toolbar">
+                <el-dropdown>
+                    <el-icon style="margin-right: 8px; margin-top: 1px"
+                    ><setting
+                    /></el-icon>
+                    <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item>View</el-dropdown-item>
+                        <el-dropdown-item>Add</el-dropdown-item>
+                        <el-dropdown-item>Delete</el-dropdown-item>
+                    </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+                <span>Tom</span>
+                </div>
+            </el-header>
+            <el-container>
+            <el-main v-show="isActiveW">
+                <el-scrollbar>
+                <el-table :data="weather">
+                    
+                    <el-table-column  prop="name" label="节气名" width="80" />
+                    <el-table-column  prop="date" label="日期" width="280" />
+                </el-table>
+                
+                </el-scrollbar>
+            </el-main>
+            <el-main v-show="isActiveH">
+                <el-scrollbar>
+                <el-table :data="holidays">
+                    <el-table-column   prop="name" label="节日名称" width="80" />
+                    <el-table-column   prop="date" label="农历" width="280" />
+                </el-table>
+                </el-scrollbar>
+            </el-main>
+        </el-container>
+            
+        
+        </el-container>
+    </el-container>
+   -->
+    
+
+      
+</div>
+
+
+<script>
+  
+  const App = {
+    data(){
+      return{
+          isActiveW:false,
+          isActiveH:false,
+          weather:[
+              {"id":"1","name":"立春","date":"2.3"},
+              {"id":"2","name":"雨水","date":"2.18"},
+              {"id":"3","name":"惊蛰","date":"3.5"},
+              {"id":"4","name":"春分","date":"3.20"},
+              {"id":"5","name":"清明","date":"4.4"},
+              {"id":"6","name":"谷雨","date":"4.19"},
+              {"id":"7","name":"立夏","date":"5.5"},
+              {"id":"8","name":"小满","date":"5.20"},
+              {"id":"9","name":"芒种","date":"6.5"},
+              {"id":"10","name":"夏至","date":"6.21"},
+              {"id":"11","name":"小暑","date":"7.6"},
+              {"id":"12","name":"大暑","date":"7.22"},
+              {"id":"13","name":"立秋","date":"8.7"},
+              {"id":"14","name":"处暑","date":"8.22"},
+              {"id":"15","name":"白露","date":"9.7"},
+              {"id":"16","name":"秋分","date":"9.22"},
+              {"id":"17","name":"寒露","date":"10.8-9"},
+              {"id":"18","name":"霜降","date":"10.23-24"},
+              {"id":"19","name":"立冬","date":"11.7-8"},
+              {"id":"20","name":"小雪","date":"11.22-23"},
+              {"id":"21","name":"大雪","date":"12.6"},
+              {"id":"22","name":"冬至","date":"12.21"},
+              {"id":"23","name":"小寒","date":"1.5"},
+              {"id":"24","name":"大寒","date":"1.20-21"},
+          ],
+          holidays:[
+              {"id":"1","name":"春节","date":"正月初一"},
+              {"id":"2","name":"元宵节","date":"正月十五"},
+              {"id":"3","name":"龙抬头","date":"二月初二"},
+              {"id":"4","name":"社日节","date":"二月初二"},
+              {"id":"5","name":"上已节","date":"三月初三"},
+              {"id":"6","name":"寒食节","date":"冬至后105/106天\，清明节前一两天"},
+              {"id":"7","name":"清明节","date":"4.5"},
+              {"id":"8","name":"端午节","date":"五月初五"},
+              {"id":"9","name":"七夕节","date":"七月初七"},
+              {"id":"10","name":"中元节","date":"七月十五"},
+              {"id":"11","name":"中秋节","date":"八月十五"},
+              {"id":"12","name":"重阳节","date":"九月初九"},
+              {"id":"13","name":"寒衣节","date":"十月初一"},
+              {"id":"14","name":"下元节","date":"十月十五"},
+              {"id":"15","name":"冬至节","date":"12.21"},
+              {"id":"16","name":"腊八节","date":"腊月初八"},
+              {"id":"17","name":"小年","date":"腊月二十三"},
+              {"id":"18","name":"除夕","date":"腊月最后一天"},
+          ]
+      }
+  },
+  methods:{
+        showWeather(){
+            this.isActiveW=!this.isActiveW;
+        },
+        showHolidays(){
+            this.isActiveH=!this.isActiveH;
+        }
+    }
+  };
+  const app = Vue.createApp(App);
+  app.use(ElementPlus);
+  app.mount("#app");
+  
+    </script>
   </body>
 </html>
